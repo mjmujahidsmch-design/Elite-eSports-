@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Elite Battle Arena — Tournaments</title>
+<meta name="description" content="Elite Battle Arena tournament category — discover upcoming and past Free Fire events, entry fees, and prize pools." />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0d11;
+  --surface:#12131a;
+  --surface-2:#171924;
+  --line:#242637;
+  --text:#eef0f7;
+  --muted:#b5b8c9;
+  --accent:#e94560;
+  --gold:#f1c550;
+  --green:#29cc7a;
+  --radius:18px;
+  --shadow: 0 18px 50px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:"Poppins",system-ui,Segoe UI,Roboto,Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+
+/* Header */
+header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(12,13,17,.95),rgba(12,13,17,.75));backdrop-filter:saturate(140%) blur(6px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{width:40px;height:40px;border-radius:12px;background:radial-gradient(120% 120% at 0% 0%, var(--accent), #7a1023);box-shadow:inset 0 0 12px rgba(0,0,0,.35)}
+.brand h1{font-size:18px;margin:0;letter-spacing:.6px}
+.nav .actions{display:flex;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);font-weight:600}
+.btn.primary{border-color:transparent;background:linear-gradient(135deg,var(--accent),#b3122b)}
+
+/* Page head */
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:28px 0}
+.breadcrumbs{color:var(--muted);font-size:14px}
+.breadcrumbs a{color:var(--muted)}
+.title{display:flex;align-items:center;gap:12px}
+.title h2{margin:0;font-size:28px}
+.badge{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--muted);font-size:12px}
+
+/* Filters */
+.filters{display:flex;flex-wrap:wrap;gap:10px;padding:16px 0 22px}
+.chip{padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted);cursor:pointer;user-select:none}
+.chip.active{color:#0b0b0d;background:var(--gold);border-color:transparent;font-weight:700}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:260px 1fr;gap:18px}
+.sidebar{background:linear-gradient(180deg,var(--surface),var(--surface-2));border:1px solid var(--line);border-radius:var(--radius);padding:18px;height:max-content;position:sticky;top:86px}
+.sidebar h4{margin:0 0 10px}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.input,select{background:rgba(255,255,255,.03);border:1px solid var(--line);color:var(--text);padding:10px 12px;border-radius:12px}
+
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{position:relative;background:linear-gradient(180deg,var(--surface),var(--surface-2));border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.thumb{aspect-ratio:16/9;background:center/cover no-repeat}
+.body{padding:16px}
+.label-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.label{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;background:rgba(233,69,96,.15);color:var(--accent);font-size:12px;font-weight:700}
+.live{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;background:rgba(41,204,122,.15);color:var(--green);font-size:12px;font-weight:700}
+.card h3{margin:0 0 6px;font-size:18px}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.pill{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;padding:8px 10px;text-align:center;color:var(--muted);font-size:12px}
+.card .actions{display:flex;gap:10px;align-items:center}
+.btn.join{background:linear-gradient(135deg,var(--accent),#b3122b);border:none}
+.btn.ghost{background:rgba(255,255,255,.04)}
+
+.footer-bar{display:flex;align-items:center;justify-content:space-between;padding:16px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03);margin-top:16px}
+.pagination{display:flex;gap:8px}
+.page{padding:8px 12px;border:1px solid var(--line);border-radius:10px;color:var(--muted)}
+.page.active{background:var(--gold);color:#0c0d11;border-color:transparent;font-weight:700}
+
+footer{padding:28px 0;text-align:center;color:var(--muted);border-top:1px solid var(--line);margin-top:32px}
+
+@media (max-width:1100px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:860px){.grid{grid-template-columns:1fr}.sidebar{position:static;top:auto}}
+@media (max-width:620px){.cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+<div class="container nav">
+  <div class="brand">
+    <div class="logo" aria-hidden="true"></div>
+    <h1>Elite Battle Arena</h1>
+  </div>
+  <div class="actions">
+    <a href="#" class="btn">Discord</a>
+    <a href="#" class="btn primary">Register</a>
+  </div>
+</div>
+</header>
+
+<div class="container">
+<div class="page-head">
+  <div>
+    <div class="breadcrumbs"><a href="#">Home</a> • <a href="#">Tournaments</a> • Category</div>
+    <div class="title">
+      <h2>Free Fire — Ranked Battles</h2>
+      <span class="badge">Updated daily</span>
+    </div>
+  </div>
+  <div class="badge">💰 Secure prize payouts</div>
+</div>
+
+<div class="filters" id="filters">
+  <span class="chip active" data-filter="all">All</span>
+  <span class="chip" data-filter="live">Live</span>
+  <span class="chip" data-filter="upcoming">Upcoming</span>
+  <span class="chip" data-filter="finished">Finished</span>
+  <span class="chip" data-filter="free">Free Entry</span>
+  <span class="chip" data-filter="paid">Paid</span>
+</div>
+
+<div class="grid">
+  <aside class="sidebar">
+    <h4>Quick Filters</h4>
+    <div class="field">
+      <label for="mode">Match Mode</label>
+      <select id="mode" class="input">
+        <option value="any">Any</option>
+        <option value="solo">Solo</option>
+        <option value="duo">Duo</option>
+        <option value="squad">Squad</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="date">Date</label>
+      <input type="date" id="date" class="input" />
+    </div>
+    <div class="field">
+      <label for="search">Search</label>
+      <input id="search" class="input" placeholder="Type tournament name…" />
+    </div>
+    <button class="btn" id="clear">Clear Filters</button>
+  </aside>
+
+  <main>
+  <div class="cards" id="cards" role="list">
+    <!-- Sample Card -->
+    <article class="card" role="listitem" data-tags="upcoming paid squad">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1606117336091-f2a98d09c27c?q=80&w=1600&auto=format&fit=crop')"></div>
+      <div class="body">
+        <div class="label-row"><span class="label">Upcoming</span><span class="pill">Mode: Squad</span></div>
+        <h3>RRR Fire Storm Cup</h3>
+        <div class="meta">
+          <div class="pill">📅 25 Aug 2025</div>
+          <div class="pill">🎟 Entry: 100 BDT</div>
+          <div class="pill">🏆 Prize: 5,000 BDT</div>
+        </div>
+        <div class="actions"><a class="btn join" href="#">Join Now</a><a class="btn ghost" href="#">Details</a></div>
+      </div>
+    </article>
+    <!-- আরো card add করতে পারবে একইভাবে -->
+  </div>
+
+  <div class="footer-bar">
+    <div>Showing <strong>1</strong> tournaments</div>
+    <div class="pagination">
+      <a class="page active" href="#">1</a>
+      <a class="page" href="#">2</a>
+      <a class="page" href="#">Next ›</a>
+    </div>
+  </div>
+  </main>
+</div>
+
+<footer>© <span id="yr"></span> Elite Battle Arena • Built for champions</footer>
+</div>
+
+<!-- Admin Panel -->
+<div id="admin-panel" style="display:none;position:fixed;top:60px;right:20px;background:var(--surface-2);padding:20px;border:1px solid var(--line);border-radius:12px;z-index:1000;width:300px;">
+  <h3>Admin Panel</h3>
+  <label>Password: <input type="password" id="admin-pass" placeholder="Enter password"/></label>
+  <button id="admin-login" class="btn">Login</button>
+  <div id="admin-controls" style="display:none;margin-top:10px;">
+    <select id="select-card" class="input"></select>
+    <label>Date: <input type="date" id="edit-date" class="input"/></label>
+    <label>Entry Fee: <input type="text" id="edit-entry" class="input"/></label>
+    <label>Prize: <input type="text" id="edit-prize" class="input"/></label>
+    <button id="save-card" class="btn primary">Save Changes</button>
+    <button id="close-admin" class="btn">Close</button>
+  </div>
+</div>
+
+<button id="admin-toggle" class="btn" style="position:fixed;top:10px;right:20px;z-index:1000;">Admin</button>
+
+<script>
+// year
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// Filters
+const chips = document.querySelectorAll('.chip');
+const cards = document.querySelectorAll('.card[data-tags]');
+const mode = document.getElementById('mode');
+const search = document.getElementById('search');
+const clearBtn = document.getElementById('clear');
+
+function applyFilters(){
+  const active = document.querySelector('.chip.active')?.dataset.filter || 'all';
+  const m = mode.value;
+  const q = search.value.trim().toLowerCase();
+  let shown = 0;
+
+  cards.forEach(card=>{
+    const tags = card.dataset.tags.split(' ');
+    const title = card.querySelector('h3').textContent.toLowerCase();
+    const modeTag = tags.find(t=>['solo','duo','squad'].includes(t));
+
+    const matchChip = active==='all' || tags.includes(active);
+    const matchMode = (m==='any') || (modeTag===m);
+    const matchSearch = q==='' || title.includes(q);
+
+    const show = matchChip && matchMode && matchSearch;
+    card.style.display = show ? '' : 'none';
+    if(show) shown++;
+  });
+
+  document.querySelector('.footer-bar > div').innerHTML = `Showing <strong>${shown}</strong> tournaments`;
+}
+
+chips.forEach(c=>c.addEventListener('click',()=>{
+  chips.forEach(x=>x.classList.remove('active'));
+  c.classList.add('active');
+  applyFilters();
+}));
+mode.addEventListener('change', applyFilters);
+search.addEventListener('input', applyFilters);
+clearBtn.addEventListener('click', ()=>{
+  document.querySelector('.chip[data-filter="all"]').click();
+  mode.value='any';
+  search.value='';
+  applyFilters();
+});
+
+applyFilters();
+
+// Admin Panel JS
+const adminToggle = document.getElementById('admin-toggle');
+const adminPanel = document.getElementById('admin-panel');
+const adminLogin = document.getElementById('admin-login');
+const adminPass = document.getElementById('admin-pass');
+const adminControls = document.getElementById('admin-controls');
+const selectCard = document.getElementById('select-card');
+const editDate = document
